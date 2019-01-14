@@ -1,5 +1,5 @@
 ======================================================================================================
-Django framework implementation for visualisation of simple machine learning dataset nad prediction
+Django framework implementation for visualisation of simple machine learning dataset and prediction
 ======================================================================================================
 Following repository show implementation of django framework for Intive Patronage 2019 program second stage recruitment at Machine Learning & Big Data department.
 
