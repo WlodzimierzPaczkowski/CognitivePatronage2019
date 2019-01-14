@@ -51,7 +51,7 @@ Colors for pie chart are hard coded, however pie chart for learning dataest are 
 
 CSS
 ====
-few thing implemented from Bootstrap, buttons
+few thing implemented from Bootstrap, buttons, homepage element
 
 Author
 ======
