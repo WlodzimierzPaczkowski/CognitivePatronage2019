@@ -1,0 +1,274 @@
+<html>
+<body>
+<head>
+    <meta charset="UTF-8">
+    <title>Data few fancy charts nad plain HTML table</title>
+</head>
+<!-- chartjs i jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- tabela zawierająca wartości używane do nauczania -->
+<style>
+table {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: gray;
+}
+</style>
+
+<table border="1" style="position:absolute; top:0; left:1200;">
+<tr>
+<th> Worked Years </th>
+<th> Salary </th>
+</tr>
+    {% for data in all_dblearning %}
+<tr>
+    <th> {{data.worked}} </th>
+    <th> {{data.salary}} </th>
+</tr>
+{% endfor %}
+</table>
+
+<!-- tabela zawierająca wartości otrzymane przez ML -->
+
+<table border="1" style="position:absolute; top:0; left:1400;">
+<tr>
+<th> Worked Years </th>
+<th> Salary </th>
+</tr>
+    {% for data in all_dbpred %}
+<tr>
+    <th> {{data.worked}} </th>
+    <th> {{data.salary}} </th>
+</tr>
+{% endfor %}
+</table>
+
+<!-- chart.js  -->
+
+<div class="chart-container" style="position:absolute; top:0; left:0;">
+<canvas id="histChart" width="500" height="500"></canvas>
+<script>
+var ctx = document.getElementById("histChart").getContext("2d");
+var histChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels:  [  {% for data in all_dblearning %}"worked " +{{ data.worked }} + " years",{% endfor %}],
+        datasets: [{
+            label: 'Salary',
+            data: [{% for data in all_dblearning %}{{ data.salary }},{% endfor %}],
+            backgroundColor: 'rgba(255, 80, 80, 0.9)',
+            borderColor:'rgba(255,99,132,1)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+
+
+        title: {
+            display: true,
+            text: "chart of learning value database"
+            },
+        legend: {
+            display: false,
+            },
+        scales: {
+            xAxes: [{
+                display: false,
+                barPercentage: 1.3,
+                ticks: {
+                    max: 3,
+                    }
+                    },
+                    {
+                    display: true,
+                    ticks: {
+                        display: false,
+                        autoSkip: false,
+                        max: 4,
+                        }
+                        }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+</div>
+
+
+
+<div class="chart-container" style="position:absolute; top:0; left:500;">
+<canvas id="histChartPred" width="500" height="500"></canvas>
+<script>
+var ctx = document.getElementById("histChartPred").getContext("2d");
+var histChartPred = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels:  [  {% for data in all_dbpred %}"worked " +{{ data.worked }} + " years",{% endfor %}],
+        datasets: [{
+            label: 'Salary',
+            data: [{% for data in all_dbpred %}{{ data.salary }},{% endfor %}],
+            backgroundColor: 'rgba(255, 80, 80, 0.9)',
+            borderColor:'rgba(255,99,132,1)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+
+
+        title: {
+            display: true,
+            text: "chart of predicted value"
+            },
+        legend: {
+            display: false,
+            },
+        scales: {
+            xAxes: [{
+                display: false,
+                barPercentage: 1.3,
+                ticks: {
+                    max: 3,
+                    }
+                    },
+                    {
+                    display: true,
+                    ticks: {
+                        display: false,
+                        autoSkip: false,
+                        max: 4,
+                        }
+                        }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+</div>
+
+<div class="chart-container" style="position:absolute; top:500; left:0;">
+<canvas id="pieChart" width="500" height="500"></canvas>
+<script>
+
+
+var ctx = document.getElementById("pieChart").getContext("2d");
+
+var pieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: [{% for data in all_dblearning %} "worked " + {{ data.worked }} + " years",{% endfor %}],
+        datasets: [{
+            label: 'salary',
+            data: [{% for data in all_dblearning %}{{ data.salary }},{% endfor %}],
+            backgroundColor:'rgba(135, 211, 124, 0.7)',
+            borderColor: 'rgba(135, 211, 124, 1)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: "Pie chart of learning value database"
+            },
+        scales: {
+            yAxes: [{
+                display: false,
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        legend: {
+            display: false,
+        }
+    }
+});
+</script>
+</div>
+
+<div class="chart-container" style="position:absolute; top:500; left:500;">
+<canvas id="pieChartPred" width="500" height="500"></canvas>
+<script>
+
+
+var ctx = document.getElementById("pieChartPred").getContext("2d");
+
+var pieChartPred = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: [{% for data in all_dbpred %} "worked " + {{ data.worked }} + " years",{% endfor %}],
+        datasets: [{
+            label: 'salary',
+            data: [{% for data in all_dbpred %}{{ data.salary }},{% endfor %}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: "Pie chart of predicted value"
+            },
+        scales: {
+            yAxes: [{
+                display: false,
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        legend: {
+            display: false,
+
+        }
+    }
+});
+</script>
+</div>
+<div class="chart-container" style="position:absolute; top:1020; left0;">
+  <a class="btn btn-success btn-lg" href="/home/" role="button">back to homepage</a>
+
+</div>
+
+</body>
+</html>
