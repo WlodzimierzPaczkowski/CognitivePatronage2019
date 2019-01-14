@@ -1,9 +1,6 @@
 from django.shortcuts import render
-from django.http import JsonResponse
 from .models import dblearning, dbpred, chartColor
-from django.http import Http404
-from django.core import serializers
-from django.http import HttpResponse
+
 
 
 # moduł przesyłający dane do wyświetlenia tabel html z bazy danych
