@@ -23,7 +23,8 @@ for learning dataset ::
 
     ```
     import csv
-
+    
+    from dashboard.models import dblearning
     with open('csvpred.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
